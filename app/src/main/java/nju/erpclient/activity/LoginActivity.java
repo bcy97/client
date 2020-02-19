@@ -22,10 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import nju.erpclient.R;
 import nju.erpclient.utils.Constants;
 import nju.erpclient.vo.Result;
 import nju.erpclient.vo.UserInfo;
+
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.annotation.ContentType;
@@ -160,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
 
             HttpInfo response = OkHttpUtil.getDefault().doPostSync(request);
 
-            if (response.isSuccessful() && response.getRetDetail().equals("") || response.getRetDetail() == null) {
+            if (!response.isSuccessful() || response.getRetDetail().equals("") || response.getRetDetail() == null) {
                 return null;
             } else {
                 return gson.fromJson(response.getRetDetail(), new TypeToken<Result<UserInfo>>() {
